@@ -6,6 +6,7 @@ import MicIcon from "@mui/icons-material/Mic";
 import MicOffIcon from "@mui/icons-material/MicOff";
 import { MyContext } from "./MyContext";
 import { useContext, useState } from "react";
+import config from "./config";
 
 export default function Search() {
   const {
@@ -19,6 +20,9 @@ export default function Search() {
     setThreadId,
     getAllThreads,
     setAllThreads,
+    token,
+    prevChats,
+   
     
   } = useContext(MyContext);
 
@@ -74,7 +78,7 @@ export default function Search() {
         if(currThread){
           return[currThread, ...otherThreads]
         }
-        prevThreads
+        return prevThreads
       })
     }
 
@@ -87,16 +91,45 @@ export default function Search() {
       },
     ]);
 
+    if(!token){
+      try{
+        const history = prevChats.map(msg=>({role : msg.role, content : msg.content})) ;
+        history.push({role : "user", content : currPrompt}) ;
+
+        const response = await fetch(`${config.API_BASE_URL}/api/guest`,{
+          method :"POST",
+          headers:{
+            "Content-Type" : "application/json",
+          },
+          body : JSON.stringify({messages : history}),
+        });
+        const data = await response.json() ;
+
+        setPrevChats((prev)=>[...prev,
+          {role : "assistant", content : data.reply},
+        ])
+       setTimeout(() => {
+              setReply(data.reply); 
+          }, 100);
+      }catch(err){
+      console.log("guest chat error :", err) ;
+    }finally{
+      setLoading(false) ;
+    }
+    return ; 
+    }
+
     try {
       const apiURL = threadId
-        ? `http://localhost:3000/api/thread/${threadId}`
-        : "http://localhost:3000/api/chat";
+        ? `${config.API_BASE_URL}/api/thread/${threadId}`
+        : `${config.API_BASE_URL}/api/chat`;
       const method = threadId ? "PATCH" : "POST";
-
+      console.log("sending token :", token) ;
       const options = {
         method: method,
         headers: {
           "Content-Type": "application/json",
+          "auth-token" : token ,
         },
 
         body: JSON.stringify({
@@ -149,6 +182,9 @@ export default function Search() {
       setLoading(false);
     }
   };
+  const inputColor =  "white" ;
+  const placeholderColor = "#BEBEBE" ;
+  const iconColor =  "#BEBEBE" ;
 
   return (
     <>
@@ -183,8 +219,9 @@ export default function Search() {
             "& .MuiInputBase-input": {
               fontSize: { xs: "1rem", md: "1.2rem" },
               marginLeft: { xs: "0.5", md: "1rem" },
+              color : inputColor,
               "&::placeholder": {
-                color: "#BEBEBE",
+                color: placeholderColor,
                 opacity: 1,
               },
             },
@@ -198,7 +235,7 @@ export default function Search() {
           ): (
           <MicIcon
             sx={{
-              color: "#BEBEBE",
+              color: iconColor,
               cursor: "pointer",
               fontSize: "1.8rem",
               "&:hover": { color: "white" },
@@ -210,7 +247,8 @@ export default function Search() {
           onClick={getReply}
           fontSize="medium"
           className="send-btn"
-          sx={{ margin: "2rem", cursor: "pointer" }}
+          sx={{ margin: "2rem", cursor: "pointer", color : iconColor,
+          "&:hover": { color:  "black"  }, }}
         />
       </Box>
     </>

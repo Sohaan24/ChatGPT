@@ -2,17 +2,29 @@ require('dotenv').config();
 const express = require("express");
 const path = require("path");
 const cors = require("cors") ;
-const Groq = require('groq-sdk');
+const mongoose = require("mongoose");
+
 const app = express() ;
 const dburl = process.env.MONGO_URL
 const PORT = 3000 ;
-const mongoose = require("mongoose");
-const Schema = mongoose.Schema ;
-const getAPIResponse = require("./utils/groqAPI");
+
 const chatRouter = require("./route/chat");
+const authRouter = require("./route/authRoutes") ;
+const errorHandler = require("./middleware/errorHandler") ;
 
 app.use(express.json()) ;
 app.use(cors()) ;
+
+app.use("/api/auth",authRouter) ;
+app.use("/api", chatRouter);
+
+app.use((req, res, next) => {
+  const error = new Error(`Not Found - ${req.originalUrl}`);
+  res.status(404);
+  next(error); 
+});
+
+app.use(errorHandler) ;
 
 async function main() {
   try {
@@ -31,7 +43,9 @@ async function main() {
   }
 }
 
-app.use("/api", chatRouter);
+if (require.main === module) {
+    main();
+}
 
-main();
+module.exports = app;
 

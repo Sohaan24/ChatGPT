@@ -18,10 +18,13 @@ export default function MainLayout(){
         >
           
           {!isChatStarted && <h1>Hi, how can I assist?</h1>}
-          <div className="loader-container">
-            <BeatLoader color="white" loading={loading}></BeatLoader>
-          </div>
           {isChatStarted && <Chat/>}
+
+          {loading && (<div className="loader-container" style={{marginBottom : "5rem"}}>
+            <BeatLoader color={"#ffffff"} loading={loading} ></BeatLoader>
+          </div>)}
+          
+          
           <Search />
         </main>
         <Sidebar />

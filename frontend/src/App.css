@@ -5,6 +5,7 @@
   text-align: center;
 }
 
+
 body, .app-container {
   background-color: #1e1e1e;
   color: white;
@@ -25,23 +26,6 @@ body, .app-container {
   color: #EAEAEA !important;
 }
 
-.light-theme .sidebar {
-  background-color: #f0f0f0; 
-  color: black;
-}
-
-.light-theme .search-box {
-  background-color: #e0e0e0; 
-  color: black;
-}
-.light-theme .search-box input {
-  color: #000000 !important;
-}
-
-.light-theme .card {
-  background-color: #f5f5f5;
-  color: black;
-}
 
 .logo {
   height: 6em;
@@ -95,15 +79,6 @@ body, .app-container {
   min-height: 100vh;
 }
 
-.light-theme .main-content{
-  background-color: #ffffff !important ;
-  color : black !important;
-}
-
-.light-theme h1, 
-.light-theme p {
-  color: black; 
-}
 
 .landing-mode{
   justify-content: center; 
@@ -130,7 +105,6 @@ li:focus,
     outline: none !important;
 }
 
-.light-mode{
-  background-color: blanchedalmond; 
-  color : black ;
-}
+
+
+
