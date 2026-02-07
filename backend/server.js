@@ -18,6 +18,10 @@ app.use(cors()) ;
 app.use("/api/auth",authRouter) ;
 app.use("/api", chatRouter);
 
+app.get("/", (req, res) => {
+  res.send("API is running successfully");
+});
+
 app.use((req, res, next) => {
   const error = new Error(`Not Found - ${req.originalUrl}`);
   res.status(404);
