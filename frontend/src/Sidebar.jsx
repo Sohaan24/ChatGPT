@@ -5,6 +5,7 @@ import { MyContext } from "./MyContext";
 import AuthModal from "./AuthModel";
 import toast from 'react-hot-toast';
 import config from "./config" ;
+import logo from "./assets/chatgpt.webp"
  
 
 import {
@@ -194,7 +195,7 @@ export default function Sidebar() {
   return (
     <div className="sidebar">
       <section className="main">
-        <img src="src/assets/chatgpt.webp" className="logo"></img>
+        <img src={logo} className="logo"></img>
         <button className="icons" onClick={createNewChat}>
           <EditNote /> New Chat<br></br>
         </button>
