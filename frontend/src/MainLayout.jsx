@@ -4,13 +4,21 @@ import { BeatLoader } from "react-spinners";
 import Chat from "./Chat";
 import Search from "./Search";
 import Sidebar from "./Sidebar";
+import MenuIcon from "@mui/icons-material/Menu";
 import "./App.css";
 
 export default function MainLayout(){
-    const { isChatStarted, loading } = useContext(MyContext);
+    const { isChatStarted, loading, setSidebarOpen } = useContext(MyContext);
 
     return (
         <>
+            <button 
+                className="menu-toggle" 
+                onClick={() => setSidebarOpen(true)}
+                aria-label="Open menu"
+            >
+                <MenuIcon />
+            </button>
             <main
           className={`main-content ${
             isChatStarted ? "chat-mode" : "landing-mode"

@@ -79,6 +79,28 @@ body, .app-container {
   min-height: 100vh;
 }
 
+@media (max-width: 900px) {
+  .main-content {
+    margin-left: 0;
+    width: 100%;
+    padding: 0 1rem;
+    padding-bottom: 6rem;
+  }
+
+  .landing-mode {
+    padding-top: 4rem;
+  }
+
+  .landing-mode h1 {
+    font-size: 1.5rem;
+    padding: 0 1rem;
+  }
+
+  .chat-mode {
+    padding-top: 3.5rem;
+  }
+}
+
 
 .landing-mode{
   justify-content: center; 

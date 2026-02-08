@@ -8,6 +8,7 @@ export const MyProvider = ({children}) =>{
   const [reply, setReply] = useState(null);
   const [isChatStarted, setIsChatStarted] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
   const [prevChats, setPrevChats] = useState([]); // storing all the chats of the curr thread
   const [threadId, setThreadId] = useState(null);
   const [allThreads, setAllThreads] = useState([]);
@@ -147,6 +148,8 @@ export const MyProvider = ({children}) =>{
     logout,
     signup,
     user,
+    sidebarOpen,
+    setSidebarOpen,
   };
 
   

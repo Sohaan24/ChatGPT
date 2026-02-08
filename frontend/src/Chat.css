@@ -35,7 +35,18 @@
     margin-left: 15rem;
     max-width: 500px;
     width: fit-content;
+}
 
+@media (max-width: 900px) {
+    .userMessage {
+        margin-left: 2rem;
+        max-width: 85%;
+    }
+    
+    .userDiv, .gptDiv {
+        max-width: 100%;
+        padding: 0 0.5rem;
+    }
 }
 
 .gptMessage{

@@ -135,6 +135,8 @@ export default function Sidebar() {
     setThreadId,
     getAllThreads,
     token,
+    sidebarOpen,
+    setSidebarOpen,
   } = useContext(MyContext);
 
   const [openModal, setOpenModal ] = useState(false) ;
@@ -144,10 +146,12 @@ export default function Sidebar() {
     setReply(null);
     setPrevChats([]);
     setThreadId(null);
+    setSidebarOpen(false); // Close sidebar on mobile after creating new chat
   };
 
   const getThread = async (id) => {
     setThreadId(id);
+    setSidebarOpen(false); // Close sidebar on mobile after selecting a chat
     try {
       const response = await fetch(`${config.API_BASE_URL}/api/thread/${id}`,{
         method : "GET",
@@ -192,8 +196,15 @@ export default function Sidebar() {
     }
   };
 
+  const closeSidebar = () => setSidebarOpen(false);
+
   return (
-    <div className="sidebar">
+    <>
+      <div 
+        className={`sidebar-overlay ${sidebarOpen ? 'open' : ''}`} 
+        onClick={closeSidebar}
+      />
+      <div className={`sidebar ${sidebarOpen ? 'open' : ''}`}>
       <section className="main">
         <img src={logo} className="logo"></img>
         <button className="icons" onClick={createNewChat}>
@@ -240,6 +251,7 @@ export default function Sidebar() {
       }
        </section>
        <AuthModal open={openModal} handleClose={() => setOpenModal(false)} />
-    </div>
+      </div>
+    </>
   );
 }
